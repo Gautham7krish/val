@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Shumbidi 💘</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    height:100vh;
+    font-family:'Segoe UI',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    overflow:hidden;
+}
+
+.card{
+    background:white;
+    padding:45px 35px;
+    border-radius:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    text-align:center;
+    width:92%;
+    max-width:420px;
+    position:relative;
+}
+
+h1{
+    color:#ff4b5c;
+    margin-bottom:30px;
+}
+
+.btnRow{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+button{
+    padding:14px 28px;
+    font-size:18px;
+    border-radius:40px;
+    border:none;
+    cursor:pointer;
+}
+
+#yesBtn{
+    background:#ff4b5c;
+    color:white;
+}
+
+#noBtn{
+    background:#333;
+    color:white;
+}
+
+#message{
+    margin-top:30px;
+    font-size:22px;
+    color:#ff4b5c;
+    display:none;
+}
+
+/* hearts */
+.heart{
+    position:fixed;
+    font-size:24px;
+    animation:floatUp 3s linear forwards;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:1}
+    100%{transform:translateY(-700px);opacity:0}
+}
+
+/* dialog */
+#dialogOverlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.dialogBox{
+    background:white;
+    padding:25px 20px;
+    border-radius:20px;
+    width:85%;
+    max-width:320px;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+}
+
+.dialogBox button{
+    margin-top:15px;
+    padding:10px 24px;
+    border:none;
+    border-radius:30px;
+    background:#ff4b5c;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Shumbidi, will you be my Valentine? 💖</h1>
+
+    <div class="btnRow">
+        <button id="yesBtn">Yes 💘</button>
+        <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div id="message">Athrakk Nirbendham aanel OKAY...😌😌😌😌😌</div>
+</div>
+
+<!-- Custom Dialog -->
+<div id="dialogOverlay">
+    <div class="dialogBox">
+        <div id="dialogText"></div>
+        <button id="dialogOk">OK</button>
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+
+const dialogOverlay = document.getElementById("dialogOverlay");
+const dialogText = document.getElementById("dialogText");
+const dialogOk = document.getElementById("dialogOk");
+
+let dialogs = [
+    "Sherikkum? 😳",
+    "Venda Neeeeeeeeee… 🤨",
+    "yes Kandille vaaaname ni 😌",
+    "YES njekkaneya ninak nalle 💖",
+    "Mathi Nirth mathi 😏"
+];
+
+let d = 0;
+
+// dialog
+function showDialog(text){
+    dialogText.innerText = text;
+    dialogOverlay.style.display = "flex";
+}
+
+dialogOk.addEventListener("click", () => {
+    dialogOverlay.style.display = "none";
+    if(d >= dialogs.length){
+        noBtn.style.display = "none";
+    }
+});
+
+// move no button safely (desktop)
+function moveNo(){
+    const rect = noBtn.getBoundingClientRect();
+    const maxX = window.innerWidth - rect.width - 20;
+    const maxY = window.innerHeight - rect.height - 20;
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+
+// mobile dialogs
+noBtn.addEventListener("click", () => {
+    if(d < dialogs.length){
+        showDialog(dialogs[d]);
+        d++;
+    }else{
+        showDialog("See 😌 Just press YES ❤️");
+    }
+});
+
+// yes action
+yesBtn.addEventListener("click", () => {
+    message.style.display = "block";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    startHearts();
+});
+
+function startHearts(){
+    setInterval(()=>{
+        const heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="💖";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.top="90vh";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),3000);
+    },200);
+}
+</script>
+
+</body>
+</html>
